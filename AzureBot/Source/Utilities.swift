@@ -71,13 +71,19 @@ extension Data {
     }
 }
 
-extension CALayer {
+extension UIView {
     func roundCorners(radius: CGFloat) {
-        self.cornerRadius = radius
+        self.layer.roundCorners(radius: radius)
+    }
+    func addShadow(radius: CGFloat, opacity: Float) {
+        self.layer.addShadow(radius: radius, opacity: opacity)
     }
 }
 
 extension CALayer {
+    func roundCorners(radius: CGFloat) {
+        self.cornerRadius = radius
+    }
     func addShadow(radius: CGFloat, opacity: Float) {
         self.shadowOffset = .zero
         self.shadowOpacity = opacity

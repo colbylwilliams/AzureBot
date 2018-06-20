@@ -101,7 +101,6 @@ public class BotClient: WebSocketDelegate {
     
     var messages: [Activity] = [] {
         didSet {
-            print("didset")
             NotificationCenter.default.post(name: Notification.Name.BotClientDidAddMessageNotification, object: self, userInfo: nil)
         }
     }
@@ -164,7 +163,7 @@ public class BotClient: WebSocketDelegate {
     }
     
     public func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
-        print("[BotClient] websocketDidReceiveMessage: \(text)")
+        //print("[BotClient] websocketDidReceiveMessage: \(text)")
         
         // ignore empty messages
         guard !text.isEmpty, let data = text.data(using: .utf8) else { return }
@@ -190,10 +189,10 @@ public class BotClient: WebSocketDelegate {
             // https://docs.microsoft.com/en-us/azure/bot-service/rest-api/bot-framework-rest-direct-line-3-0-receive-activities?view=azure-bot-service-4.0#websocket-vs-http-get
             switch type {
             case .message:
-                print("message")
+//                print("message")
                 
                 messages.insert(activity, at: 0)
-                print("sort")
+//                print("sort")
                 messages.sort()
                 
             case .contactRelationUpdate:

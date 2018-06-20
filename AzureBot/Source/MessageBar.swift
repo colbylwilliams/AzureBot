@@ -1,5 +1,5 @@
 //
-//  MessageToolbar.swift
+//  MessageBar.swift
 //  AzureBot
 //
 //  Copyright (c) Microsoft Corporation. All rights reserved.
@@ -8,24 +8,34 @@
 
 import UIKit
 
-public class MessageToolbar: UIToolbar, UITextViewDelegate {
+public class MessageBar: UIView, UITextViewDelegate {
     
-    let padding:CGFloat = 16
+    let padding: CGFloat = 16
     
-    @IBOutlet weak var sendButton: UIBarButtonItem!
+    @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var placeholder: UITextView!
+    @IBOutlet weak var textContainer: UIView!
     
     public var text: String { return textView.text }
     
     public override func awakeFromNib() {
         super.awakeFromNib()
-        print("awakefromnib")
-        translatesAutoresizingMaskIntoConstraints = false
+
         textView.translatesAutoresizingMaskIntoConstraints = false
         placeholder.translatesAutoresizingMaskIntoConstraints = false
-        textView.superview?.translatesAutoresizingMaskIntoConstraints = false
+        textContainer.translatesAutoresizingMaskIntoConstraints = false
+
+//        textContainer.roundCorners(radius: 4)
+        
+        sendButton.roundCorners(radius: 12)
+        
         updateDependentState ()
+    }
+    
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        updateBarConstraints()
     }
     
     fileprivate func updateDependentState () {
@@ -38,7 +48,7 @@ public class MessageToolbar: UIToolbar, UITextViewDelegate {
         updateDependentState()
     }
     
-    @IBAction func sendButtonAction(_ sender: Any) {
+    @IBAction func sendButtonTouchUpInside(_ sender: Any) {
         BotClient.shared.send(message: textView.text) { r in
             if r.error == nil {
                 DispatchQueue.main.async {
@@ -47,25 +57,29 @@ public class MessageToolbar: UIToolbar, UITextViewDelegate {
             }
         }
     }
-    
+
     
     // MARK: - UITextViewDelegate
-    
+
     // MARK: Responding to Text Changes
     
     // public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool { }
     
     public func textViewDidChange(_ textView: UITextView) {
-        
-        print("didchange")
-        
         updateDependentState()
+    }
+    
+    func updateBarConstraints() {
+        
+        //print(frame)
         
         let height = textView.contentSize.height + padding
         
         guard height != frame.height else { return }
         
-        if let constraint = constraints.first(where: { $0.firstAttribute == .height }) {
+        print("updateing height: \(height)")
+        
+        for constraint in constraints where constraint.firstAttribute == .height {
             constraint.constant = height
         }
     }

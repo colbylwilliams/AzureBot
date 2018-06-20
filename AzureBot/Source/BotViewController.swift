@@ -13,50 +13,46 @@ public class BotViewController: UITableViewController {
     
     private var observer: AnyObject?
     private var needsUpdateViewOnAppearance = true
-    private var isVisible: Bool {
-        return isViewLoaded && view.window != nil
-    }
-//    @IBOutlet weak var messageTextView: UITextView!
-    @IBOutlet var messageToolbar: MessageToolbar!
+    
+    private var isVisible: Bool { return isViewLoaded && view.window != nil }
     
     var messages: [Activity] { return BotClient.shared.messages }
+
+    //@IBOutlet var messageToolbar: MessageToolbar!
+    //public override var inputAccessoryView: UIView? { return messageToolbar }
+    
+    @IBOutlet var messageBar: MessageBar!
+    public override var inputAccessoryView: UIView? { return messageBar }
     
     
-    public override func loadView() {
-        super.loadView()
-    }
+    public override var canBecomeFirstResponder: Bool { return true }
     
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        //tableView.register(SendMessageCell.self, forCellReuseIdentifier: SendMessageCell.reuseId)
-        //tableView.register(ReceiveMessageCell.self, forCellReuseIdentifier: ReceiveMessageCell.reuseId)
-        
         tableView.transform = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: 0)
         
-        //view.addSubview(messageToolbar)
-//        messageTextView.transform = tableView.transform
+        setupObserver()
         
+        BotClient.shared.start { r in
+            if let conversation = r.resource {
+                print(conversation.conversationId ?? "")
+                print(conversation.streamUrl ?? "")
+            } else if let error = r.error {
+                print("Error: " + error.localizedDescription)
+            }
+        }
+        
+        self.becomeFirstResponder()
+    }
+    
+    fileprivate func setupObserver() {
         observer = NotificationCenter.default.addObserver( forName: .BotClientDidAddMessageNotification, object: BotClient.shared, queue: OperationQueue.main) { [weak self] notification in
-            print("update")
             guard let `self` = self else { return }
             if self.isVisible {
                 self.tableView.reloadData()
             } else {
                 self.needsUpdateViewOnAppearance = true
-            }
-        }
-        
-        BotClient.shared.start { r in
-            if let conversation = r.resource {
-                print("...... conversationId : " + (conversation.conversationId ?? "nil"))
-                print("................ eTag : " + (conversation.eTag ?? "nil"))
-                print(".......... expires_in : \(conversation.expires_in ?? 0)")
-                print(".. referenceGrammarId : " + (conversation.referenceGrammarId ?? "nil"))
-                print("........... streamUrl : " + (conversation.streamUrl ?? "nil"))
-                print("............... token : " + (conversation.token ?? "nil"))
-            } else if let error = r.error {
-                print("Error: " + error.localizedDescription)
             }
         }
     }
@@ -71,10 +67,49 @@ public class BotViewController: UITableViewController {
     }
     
     
+    public override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+    }
+    
+    
+    public override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        print(messageBar.frame)
+        
+        if tableView.contentInset == UIEdgeInsets.zero {
+            print("z 0 : \(tableView.contentInset)")
+            tableView.contentInset = UIEdgeInsets(top: max(tableView.safeAreaInsets.top, messageBar.frame.height) - tableView.adjustedContentInset.top, left: 0, bottom: tableView.safeAreaInsets.bottom - tableView.adjustedContentInset.bottom, right: 0)
+            print("z 1 : \(tableView.contentInset)")
+        }
+    }
+    
+    
     deinit {
         if let observer = observer {
             NotificationCenter.default.removeObserver(observer)
         }
+    }
+    
+    var adjustedContentInsetCache: UIEdgeInsets!
+    
+    public override func scrollViewDidChangeAdjustedContentInset(_ scrollView: UIScrollView) {
+//        print("s \(tableView.safeAreaInsets)")
+//        print("s \(tableView.safeAreaLayoutGuide)")
+        
+//        if adjustedContentInsetCache == nil {
+//            adjustedContentInsetCache = scrollView.adjustedContentInset
+//        }
+//
+//        if adjustedContentInsetCache == scrollView.adjustedContentInset { return }
+//
+//        adjustedContentInsetCache = scrollView.adjustedContentInset
+//
+//        scrollView.contentInset = UIEdgeInsets(top: scrollView.safeAreaInsets.top - scrollView.adjustedContentInset.top, left: 0, bottom: scrollView.safeAreaInsets.bottom - scrollView.adjustedContentInset.bottom, right: 0)
+//
+//        print("scrollViewDidChangeAdjustedContentInset: \(scrollView.contentInset)")
+//        print("scrollViewDidChangeAdjustedContentInset: \(scrollView.adjustedContentInset)")
+        
     }
     
     
@@ -86,11 +121,11 @@ public class BotViewController: UITableViewController {
     
     public override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        // print(tableView.contentOffset)
+        
         let message = messages[indexPath.row]
         let sending = message.from?.id != "homebotjs"
         let reuseId = sending ? SendMessageCell.reuseId : ReceiveMessageCell.reuseId
-        
-        print(message.text ?? "nope")
         
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseId, for: indexPath)
         
@@ -101,10 +136,6 @@ public class BotViewController: UITableViewController {
         return cell
     }
     
-    
     // MARK: - UITableViewDelegate
-    
-    // public override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { }
-    // public override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat { }
     
 }
