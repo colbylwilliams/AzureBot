@@ -23,7 +23,6 @@ public class ReceiveMessageCell: UITableViewCell, MessageCell {
         messageView.layer.addShadow(radius: 3, opacity: 0.1)
         
         avatarImage.layer.roundCorners(radius: avatarImage.frame.width/2)
-        avatarImage.clipsToBounds = true
     }
     
     public override var textLabel: UILabel? {
