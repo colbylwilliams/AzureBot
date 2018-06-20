@@ -1,0 +1,476 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9399EAD120D990E1000E24B4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9399EAD020D990E1000E24B4 /* AppDelegate.swift */; };
+		9399EAD320D990E1000E24B4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9399EAD220D990E1000E24B4 /* ViewController.swift */; };
+		9399EAD620D990E1000E24B4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9399EAD420D990E1000E24B4 /* Main.storyboard */; };
+		9399EAD820D990E3000E24B4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9399EAD720D990E3000E24B4 /* Assets.xcassets */; };
+		9399EADB20D990E3000E24B4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9399EAD920D990E3000E24B4 /* LaunchScreen.storyboard */; };
+		9399EAE620D990E4000E24B4 /* AzureBot_ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9399EAE520D990E4000E24B4 /* AzureBot_ExampleTests.swift */; };
+		9399EAF220D99115000E24B4 /* AzureBot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9399EAF120D99115000E24B4 /* AzureBot.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9399EAE220D990E4000E24B4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9399EAC520D990E1000E24B4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9399EACC20D990E1000E24B4;
+			remoteInfo = "AzureBot Example";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		9399EACD20D990E1000E24B4 /* AzureBot Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AzureBot Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9399EAD020D990E1000E24B4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		9399EAD220D990E1000E24B4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		9399EAD520D990E1000E24B4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		9399EAD720D990E3000E24B4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9399EADA20D990E3000E24B4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		9399EADC20D990E3000E24B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9399EAE120D990E4000E24B4 /* AzureBot ExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AzureBot ExampleTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9399EAE520D990E4000E24B4 /* AzureBot_ExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureBot_ExampleTests.swift; sourceTree = "<group>"; };
+		9399EAE720D990E4000E24B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9399EAF120D99115000E24B4 /* AzureBot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AzureBot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9399EACA20D990E1000E24B4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9399EAF220D99115000E24B4 /* AzureBot.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9399EADE20D990E4000E24B4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9399EAC420D990E1000E24B4 = {
+			isa = PBXGroup;
+			children = (
+				9399EACF20D990E1000E24B4 /* Source */,
+				9399EAE420D990E4000E24B4 /* Tests */,
+				9399EACE20D990E1000E24B4 /* Products */,
+				9399EAF020D99115000E24B4 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		9399EACE20D990E1000E24B4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9399EACD20D990E1000E24B4 /* AzureBot Example.app */,
+				9399EAE120D990E4000E24B4 /* AzureBot ExampleTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9399EACF20D990E1000E24B4 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				9399EAD020D990E1000E24B4 /* AppDelegate.swift */,
+				9399EAD220D990E1000E24B4 /* ViewController.swift */,
+				9399EAD420D990E1000E24B4 /* Main.storyboard */,
+				9399EAD720D990E3000E24B4 /* Assets.xcassets */,
+				9399EAD920D990E3000E24B4 /* LaunchScreen.storyboard */,
+				9399EADC20D990E3000E24B4 /* Info.plist */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		9399EAE420D990E4000E24B4 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				9399EAE520D990E4000E24B4 /* AzureBot_ExampleTests.swift */,
+				9399EAE720D990E4000E24B4 /* Info.plist */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		9399EAF020D99115000E24B4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9399EAF120D99115000E24B4 /* AzureBot.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9399EACC20D990E1000E24B4 /* AzureBot Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9399EAEA20D990E4000E24B4 /* Build configuration list for PBXNativeTarget "AzureBot Example" */;
+			buildPhases = (
+				9399EAC920D990E1000E24B4 /* Sources */,
+				9399EACA20D990E1000E24B4 /* Frameworks */,
+				9399EACB20D990E1000E24B4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "AzureBot Example";
+			productName = "AzureBot Example";
+			productReference = 9399EACD20D990E1000E24B4 /* AzureBot Example.app */;
+			productType = "com.apple.product-type.application";
+		};
+		9399EAE020D990E4000E24B4 /* AzureBot ExampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9399EAED20D990E4000E24B4 /* Build configuration list for PBXNativeTarget "AzureBot ExampleTests" */;
+			buildPhases = (
+				9399EADD20D990E4000E24B4 /* Sources */,
+				9399EADE20D990E4000E24B4 /* Frameworks */,
+				9399EADF20D990E4000E24B4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9399EAE320D990E4000E24B4 /* PBXTargetDependency */,
+			);
+			name = "AzureBot ExampleTests";
+			productName = "AzureBot ExampleTests";
+			productReference = 9399EAE120D990E4000E24B4 /* AzureBot ExampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9399EAC520D990E1000E24B4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0940;
+				LastUpgradeCheck = 0940;
+				ORGANIZATIONNAME = Microsoft;
+				TargetAttributes = {
+					9399EACC20D990E1000E24B4 = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
+					9399EAE020D990E4000E24B4 = {
+						CreatedOnToolsVersion = 9.4.1;
+						TestTargetID = 9399EACC20D990E1000E24B4;
+					};
+				};
+			};
+			buildConfigurationList = 9399EAC820D990E1000E24B4 /* Build configuration list for PBXProject "AzureBot Example" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9399EAC420D990E1000E24B4;
+			productRefGroup = 9399EACE20D990E1000E24B4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9399EACC20D990E1000E24B4 /* AzureBot Example */,
+				9399EAE020D990E4000E24B4 /* AzureBot ExampleTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9399EACB20D990E1000E24B4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9399EADB20D990E3000E24B4 /* LaunchScreen.storyboard in Resources */,
+				9399EAD820D990E3000E24B4 /* Assets.xcassets in Resources */,
+				9399EAD620D990E1000E24B4 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9399EADF20D990E4000E24B4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9399EAC920D990E1000E24B4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9399EAD320D990E1000E24B4 /* ViewController.swift in Sources */,
+				9399EAD120D990E1000E24B4 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9399EADD20D990E4000E24B4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9399EAE620D990E4000E24B4 /* AzureBot_ExampleTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9399EAE320D990E4000E24B4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9399EACC20D990E1000E24B4 /* AzureBot Example */;
+			targetProxy = 9399EAE220D990E4000E24B4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		9399EAD420D990E1000E24B4 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9399EAD520D990E1000E24B4 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		9399EAD920D990E3000E24B4 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9399EADA20D990E3000E24B4 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		9399EAE820D990E4000E24B4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		9399EAE920D990E4000E24B4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		9399EAEB20D990E4000E24B4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = Source/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.azure.bot.example;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9399EAEC20D990E4000E24B4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = Source/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.azure.bot.example;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		9399EAEE20D990E4000E24B4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.azure.bot.example.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AzureBot Example.app/AzureBot Example";
+			};
+			name = Debug;
+		};
+		9399EAEF20D990E4000E24B4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.azure.bot.example.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AzureBot Example.app/AzureBot Example";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9399EAC820D990E1000E24B4 /* Build configuration list for PBXProject "AzureBot Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9399EAE820D990E4000E24B4 /* Debug */,
+				9399EAE920D990E4000E24B4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9399EAEA20D990E4000E24B4 /* Build configuration list for PBXNativeTarget "AzureBot Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9399EAEB20D990E4000E24B4 /* Debug */,
+				9399EAEC20D990E4000E24B4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9399EAED20D990E4000E24B4 /* Build configuration list for PBXNativeTarget "AzureBot ExampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9399EAEE20D990E4000E24B4 /* Debug */,
+				9399EAEF20D990E4000E24B4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9399EAC520D990E1000E24B4 /* Project object */;
+}
