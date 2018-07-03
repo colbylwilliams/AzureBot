@@ -12,28 +12,19 @@ public class ReceiveMessageCell: UITableViewCell, MessageCell {
     
     static let reuseId = "ReceiveMessageCell"
     
-    @IBOutlet weak var messageView: UIView!
-    @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet public weak var messageView: UIView!
+    @IBOutlet public weak var messageLabel: UILabel!
     @IBOutlet weak var avatarImage: UIImageView!
+
+    public override var textLabel: UILabel? { return messageLabel }
+    
+    public override var imageView: UIImageView? { return avatarImage }
     
     override public func layoutSubviews() {
         super.layoutSubviews()
         
-        messageView.layer.roundCorners(radius: 5)
-        messageView.layer.addShadow(radius: 3, opacity: 0.1)
+        configureForReceive()
         
-        avatarImage.layer.roundCorners(radius: avatarImage.frame.width/2)
-    }
-    
-    public override var textLabel: UILabel? {
-        return messageLabel
-    }
-
-    public override var imageView: UIImageView? {
-        return avatarImage
-    }
-    
-    public func set(message: String) {
-        messageLabel.text = message
+        avatarImage.roundCorners(radius: avatarImage.frame.width/2)
     }
 }

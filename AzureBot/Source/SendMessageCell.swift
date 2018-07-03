@@ -12,22 +12,16 @@ public class SendMessageCell: UITableViewCell, MessageCell {
     
     static let reuseId = "SendMessageCell"
     
-    @IBOutlet weak var messageView: UIView!
-    @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet public weak var messageView: UIView!
+    @IBOutlet public weak var messageLabel: UILabel!
     
+    public override var textLabel: UILabel? { return messageLabel }
+    
+    public func set(message: String) { messageLabel.text = message }
+
     override public func layoutSubviews() {
         super.layoutSubviews()
         
-        messageView.layer.roundCorners(radius: 5)
-        messageView.layer.addShadow(radius: 2, opacity: 0.3)
+        configureForSend()
     }
-    
-    public override var textLabel: UILabel? {
-        return messageLabel
-    }
-    
-    public func set(message: String) {
-        messageLabel.text = message
-    }
-
 }

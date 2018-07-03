@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		932FE64120DA87AE0056CE77 /* MessageToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932FE64020DA87AE0056CE77 /* MessageToolbar.swift */; };
 		932FE64320DA8A4D0056CE77 /* AzureBot.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 932FE64220DA8A4D0056CE77 /* AzureBot.xcassets */; };
 		932FE64520DAA3BA0056CE77 /* MessageBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932FE64420DAA3BA0056CE77 /* MessageBar.swift */; };
+		93381B6C20DD680700883D31 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93381B6B20DD680700883D31 /* LocationManager.swift */; };
 		9399EAA220D96063000E24B4 /* AzureBot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9399EA9820D96063000E24B4 /* AzureBot.framework */; };
 		9399EAA720D96063000E24B4 /* AzureBotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9399EAA620D96063000E24B4 /* AzureBotTests.swift */; };
 		9399EAA920D96063000E24B4 /* AzureBot.h in Headers */ = {isa = PBXBuildFile; fileRef = 9399EA9B20D96063000E24B4 /* AzureBot.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -25,6 +25,9 @@
 		9399EAFF20D9F35C000E24B4 /* SendMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9399EAFE20D9F35C000E24B4 /* SendMessageCell.swift */; };
 		9399EB0120D9F363000E24B4 /* ReceiveMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9399EB0020D9F363000E24B4 /* ReceiveMessageCell.swift */; };
 		9399EB0720D9F6E7000E24B4 /* AzureBot.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9399EB0620D9F6E7000E24B4 /* AzureBot.storyboard */; };
+		93A6D57520EBC95500892561 /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A6D57420EBC95500892561 /* Context.swift */; };
+		93D61E0320DC880B00E8F627 /* ModelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D61E0220DC880B00E8F627 /* ModelExtensions.swift */; };
+		93D61E0520DC89C700E8F627 /* SortedArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D61E0420DC89C700E8F627 /* SortedArray.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,9 +41,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		932FE64020DA87AE0056CE77 /* MessageToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageToolbar.swift; sourceTree = "<group>"; };
 		932FE64220DA8A4D0056CE77 /* AzureBot.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AzureBot.xcassets; sourceTree = "<group>"; };
 		932FE64420DAA3BA0056CE77 /* MessageBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBar.swift; sourceTree = "<group>"; };
+		93381B6B20DD680700883D31 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		9399EA9820D96063000E24B4 /* AzureBot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AzureBot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9399EA9B20D96063000E24B4 /* AzureBot.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AzureBot.h; sourceTree = "<group>"; };
 		9399EA9C20D96063000E24B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -59,6 +62,9 @@
 		9399EAFE20D9F35C000E24B4 /* SendMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageCell.swift; sourceTree = "<group>"; };
 		9399EB0020D9F363000E24B4 /* ReceiveMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiveMessageCell.swift; sourceTree = "<group>"; };
 		9399EB0620D9F6E7000E24B4 /* AzureBot.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AzureBot.storyboard; sourceTree = "<group>"; };
+		93A6D57420EBC95500892561 /* Context.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Context.swift; sourceTree = "<group>"; };
+		93D61E0220DC880B00E8F627 /* ModelExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelExtensions.swift; sourceTree = "<group>"; };
+		93D61E0420DC89C700E8F627 /* SortedArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortedArray.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,21 +109,24 @@
 		9399EA9A20D96063000E24B4 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				9399EAC120D98B29000E24B4 /* Api.swift */,
 				9399EB0620D9F6E7000E24B4 /* AzureBot.storyboard */,
+				9399EAC120D98B29000E24B4 /* Api.swift */,
 				9399EAB620D970E9000E24B4 /* BotClient.swift */,
+				93381B6B20DD680700883D31 /* LocationManager.swift */,
+				9399EAF820D9D9E9000E24B4 /* BotViewController.swift */,
 				9399EAB220D962B2000E24B4 /* Http.swift */,
+				932FE64420DAA3BA0056CE77 /* MessageBar.swift */,
 				9399EAB420D9662F000E24B4 /* Models.swift */,
+				93D61E0220DC880B00E8F627 /* ModelExtensions.swift */,
 				9399EAFC20D9E89C000E24B4 /* MessageCell.swift */,
 				9399EAFE20D9F35C000E24B4 /* SendMessageCell.swift */,
 				9399EB0020D9F363000E24B4 /* ReceiveMessageCell.swift */,
-				9399EAF820D9D9E9000E24B4 /* BotViewController.swift */,
-				932FE64020DA87AE0056CE77 /* MessageToolbar.swift */,
-				932FE64420DAA3BA0056CE77 /* MessageBar.swift */,
 				9399EABD20D97F89000E24B4 /* Response.swift */,
 				9399EABF20D98108000E24B4 /* Utilities.swift */,
-				9399EAC320D98B40000E24B4 /* Supporting Files */,
+				93D61E0420DC89C700E8F627 /* SortedArray.swift */,
 				932FE64220DA8A4D0056CE77 /* AzureBot.xcassets */,
+				9399EAC320D98B40000E24B4 /* Supporting Files */,
+				93A6D57420EBC95500892561 /* Context.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -295,14 +304,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				9399EAC220D98B29000E24B4 /* Api.swift in Sources */,
+				93D61E0320DC880B00E8F627 /* ModelExtensions.swift in Sources */,
 				9399EAFD20D9E89C000E24B4 /* MessageCell.swift in Sources */,
+				93A6D57520EBC95500892561 /* Context.swift in Sources */,
 				9399EABE20D97F89000E24B4 /* Response.swift in Sources */,
 				9399EAB320D962B2000E24B4 /* Http.swift in Sources */,
 				9399EAFF20D9F35C000E24B4 /* SendMessageCell.swift in Sources */,
 				9399EB0120D9F363000E24B4 /* ReceiveMessageCell.swift in Sources */,
 				9399EAB720D970E9000E24B4 /* BotClient.swift in Sources */,
+				93D61E0520DC89C700E8F627 /* SortedArray.swift in Sources */,
 				9399EAC020D98108000E24B4 /* Utilities.swift in Sources */,
-				932FE64120DA87AE0056CE77 /* MessageToolbar.swift in Sources */,
+				93381B6C20DD680700883D31 /* LocationManager.swift in Sources */,
 				932FE64520DAA3BA0056CE77 /* MessageBar.swift in Sources */,
 				9399EAB520D9662F000E24B4 /* Models.swift in Sources */,
 				9399EAF920D9D9E9000E24B4 /* BotViewController.swift in Sources */,

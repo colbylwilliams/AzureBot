@@ -26,7 +26,7 @@ extension String {
 extension Optional where Wrapped == String {
     
     var isNilOrEmpty: Bool {
-        return self != nil && !self!.isEmpty
+        return self == nil || self!.isEmpty
     }
     
     var valueOrEmpty: String {
@@ -71,25 +71,34 @@ extension Data {
     }
 }
 
+
 extension UIView {
-    func roundCorners(radius: CGFloat) {
-        self.layer.roundCorners(radius: radius)
+    
+    func roundCorners(radius: CGFloat, skipping: CACornerMask = []) {
+        self.layer.roundCorners(radius: radius, skipping: skipping)
     }
-    func addShadow(radius: CGFloat, opacity: Float) {
-        self.layer.addShadow(radius: radius, opacity: opacity)
+    func addShadow(opacity: Float, radius: CGFloat = 3.0, offset: CGSize = CGSize(width: 0.0, height: -3.0)) {
+        self.layer.addShadow(opacity: opacity, radius: radius, offset: offset)
     }
 }
 
 extension CALayer {
-    func roundCorners(radius: CGFloat) {
+    
+    fileprivate var allCorners: CACornerMask { return [ .layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner ] }
+    
+    func roundCorners(radius: CGFloat, skipping skip: CACornerMask = []) {
         self.cornerRadius = radius
+        self.maskedCorners = allCorners.subtracting(skip)
     }
-    func addShadow(radius: CGFloat, opacity: Float) {
+    // system default for shadowRadius is 3.0
+    // system default for shadowOffset is (0.0, -3.0)
+    func addShadow(opacity: Float, radius: CGFloat = 3.0, offset: CGSize = CGSize(width: 0.0, height: -3.0)) {
         self.shadowOffset = .zero
         self.shadowOpacity = opacity
         self.shadowRadius = radius
         self.shadowColor = UIColor.black.cgColor
         self.masksToBounds = false
+        self.shadowOffset = offset
     }
 }
 
@@ -125,7 +134,7 @@ extension DateFormatter {
             let fractionStr = String(dateString[fractionRange])
             
             if var fraction = Double(fractionStr) {
-                fraction = Double(ceil(1000000*fraction)/1000000)
+                fraction = Double(floor(1000000*fraction)/1000000)
                 preliminaryDate.addTimeInterval(fraction)
             }
         }

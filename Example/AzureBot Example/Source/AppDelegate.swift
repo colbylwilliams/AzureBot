@@ -18,16 +18,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        window = window ?? UIWindow(frame: UIScreen.main.bounds)
+        BotClient.shared.configure(context:[.location])
         
-        let storyboard = UIStoryboard(name: "AzureBot", bundle: Bundle.init(for: BotViewController.self))
-        
-        let rootController = storyboard.instantiateViewController(withIdentifier: "BotViewController")
-        
-        if let window = window {
-            window.rootViewController = rootController
-            window.makeKeyAndVisible()
-        }
+//        window = window ?? UIWindow(frame: UIScreen.main.bounds)
+//        
+//        let storyboard = UIStoryboard(name: "AzureBot", bundle: Bundle.init(for: BotViewController.self))
+//        
+//        let rootController = storyboard.instantiateViewController(withIdentifier: "BotViewController")
+//        
+//        if let window = window {
+//            window.rootViewController = rootController
+//            window.makeKeyAndVisible()
+//        }
         
         return true
     }

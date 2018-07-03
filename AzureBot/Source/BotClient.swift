@@ -18,89 +18,19 @@ public class BotClient: WebSocketDelegate {
     public static let shared: BotClient = BotClient()
     init() { }
     
+    fileprivate static let _directLineSecretKey = "" // paste key here or pass in configure()
     
-    static let iso8601Formatter: DateFormatter = {
-        
-        let formatter = DateFormatter()
-        
-        formatter.calendar      = Calendar(identifier: .iso8601)
-        formatter.locale        = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone      = TimeZone(secondsFromGMT: 0)
-        formatter.dateFormat    = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ"
-        
-        return formatter
-    }()
-    
-    let encoder: JSONEncoder = {
-        let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .formatted(iso8601Formatter)
-        return encoder
-    }()
-    
-    let decoder: JSONDecoder = {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(iso8601Formatter)
-        return decoder
-    }()
+    fileprivate var directLineSecretKey: String = _directLineSecretKey
 
+    fileprivate var context: [Context] = []
     
-//    static let roundTripIso8601: DateFormatter = {
-//        
-//        let formatter = DateFormatter()
-//        
-//        formatter.calendar      = Calendar(identifier: .iso8601)
-//        formatter.locale        = Locale(identifier: "en_US_POSIX")
-//        formatter.timeZone      = TimeZone(secondsFromGMT: 0)
-//        formatter.dateFormat    = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ"
-//        
-//        return formatter
-//    }()
-//
-//    static func roundTripIso8601Encoder(date: Date, encoder: Encoder) throws -> Void {
-//        
-//        var container = encoder.singleValueContainer()
-//        
-//        if container.codingPath.last?.stringValue == "timestamp" {
-//            
-//            try container.encode(date.timeIntervalSince1970)
-//            
-//        } else {
-//            
-//            let data = roundTripIso8601.roundTripIso8601StringWithMicroseconds(from: date)
-//            
-//            try container.encode(data)
-//        }
-//    }
-//    
-//    
-//    static func roundTripIso8601Decoder(decoder: Decoder) throws -> Date {
-//        
-//        let container = try decoder.singleValueContainer()
-//        
-//        if container.codingPath.last?.stringValue == "timestamp" {
-//            
-//            let dateDouble = try container.decode(Double.self)
-//            
-//            return Date.init(timeIntervalSince1970: dateDouble)
-//            
-//        } else {
-//            
-//            let dateString = try container.decode(String.self)
-//            
-//            guard let microsecondDate = roundTripIso8601.roundTripIso8601DateWithMicroseconds(from: dateString) else {
-//                throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "unable to parse string (\(dateString)) into date"))
-//            }
-//            
-//            return microsecondDate
-//        }
-//    }
-
-
+    
     fileprivate var socket: WebSocket!
     fileprivate let session: URLSession = URLSession(configuration: URLSessionConfiguration.default)
     
-    var messages: [Activity] = [] {
+    var messages:SortedArray<Activity> = SortedArray(areInIncreasingOrder: > ) {
         didSet {
+            print("didSet")
             NotificationCenter.default.post(name: Notification.Name.BotClientDidAddMessageNotification, object: self, userInfo: nil)
         }
     }
@@ -108,6 +38,13 @@ public class BotClient: WebSocketDelegate {
     fileprivate var activities: [Activity] = []
     fileprivate var conversation: Conversation?
 
+    
+    public func configure(secret: String? = nil, context: [Context] = []) {
+        self.context = context
+        if let secret = secret, !secret.isEmpty {
+            self.directLineSecretKey = secret
+        }
+    }
     
     
     public func start(completion: @escaping (Response<Conversation>) -> Void) {
@@ -130,20 +67,26 @@ public class BotClient: WebSocketDelegate {
     
     public func send(message: String, completion: @escaping (Response<ResourceResponse>) -> Void) {
         
-        let activity = Activity(message: message, from: currentUser, in: conversation)
+        var activity = Activity(message: message, from: currentUser, in: conversation)
         
-//        do {
-//            let data = try encoder.encode(activity)
-//            socket.write(data: data)
-//        } catch {
-//            print("Error: " + error.localizedDescription)
-//        }
+        for c in context {
+            switch c {
+            case .location:
+                LocationManager.shared.getLocation { (location, error) in
+                    if let location = location {
+                        activity.entities = [GeoCoordinates.from(location: location)]
+                    }
+                }
+            }
+        }
+        
+        print("insert")
+        messages.insert(activity)
         
         postActivity(activity, completion: completion)
     }
     
-    
-    
+        
     func startSocket(_ url: URL) {
         print("[BotClient] starting socket...")
         socket = WebSocket.init(url: url)
@@ -189,11 +132,14 @@ public class BotClient: WebSocketDelegate {
             // https://docs.microsoft.com/en-us/azure/bot-service/rest-api/bot-framework-rest-direct-line-3-0-receive-activities?view=azure-bot-service-4.0#websocket-vs-http-get
             switch type {
             case .message:
-//                print("message")
+
+                messages.insertOrReplace(element: activity)
                 
-                messages.insert(activity, at: 0)
-//                print("sort")
-                messages.sort()
+//                if let i = messages.anyIndex(of: activity) {
+//                    messages.remove(at: i)
+//                }
+//
+//                messages.insert(activity)
                 
             case .contactRelationUpdate:
                 print("contactRelationUpdate")
@@ -207,35 +153,6 @@ public class BotClient: WebSocketDelegate {
                 print("event")
             case .invoke:
                 print("invoke")
-            }
-        }
-        
-        if messages.count == 2 {
-            send(message: "Colby") { r in
-                if let resource = r.resource {
-                    print("good")
-                    print(resource)
-                } else if let e = r.error {
-                    print("bad + " + e.localizedDescription)
-                }
-            }
-        } else if messages.count == 5 {
-            send(message: "1234a") { r in
-                if let resource = r.resource {
-                    print("good")
-                    print(resource)
-                } else if let e = r.error {
-                    print("bad + " + e.localizedDescription)
-                }
-            }
-        } else if messages.count == 8 {
-            send(message: "When is rent due?") { r in
-                if let resource = r.resource {
-                    print("good")
-                    print(resource)
-                } else if let e = r.error {
-                    print("bad + " + e.localizedDescription)
-                }
             }
         }
     }
@@ -437,6 +354,71 @@ public class BotClient: WebSocketDelegate {
         }
         
         return query
+    }
+    
+    let encoder: JSONEncoder = {
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .custom(roundTripIso8601Encoder) //.formatted(iso8601Formatter)
+        encoder.outputFormatting = .prettyPrinted
+        return encoder
+    }()
+    
+    let decoder: JSONDecoder = {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .custom(roundTripIso8601Decoder) //.formatted(iso8601Formatter)
+        return decoder
+    }()
+}
+
+// MARK: - Date Encoder & Decoder
+
+extension BotClient {
+    
+    static let iso8601Formatter: DateFormatter = {
+        
+        let formatter = DateFormatter()
+        
+        formatter.calendar      = Calendar(identifier: .iso8601)
+        formatter.locale        = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone      = TimeZone(secondsFromGMT: 0)
+        formatter.dateFormat    = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ"
+        
+        return formatter
+    }()
+    
+    static let roundTripIso8601: DateFormatter = {
+        
+        let formatter = DateFormatter()
+        
+        formatter.calendar      = Calendar(identifier: .iso8601)
+        formatter.locale        = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone      = TimeZone(secondsFromGMT: 0)
+        formatter.dateFormat    = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ"
+        
+        return formatter
+    }()
+    
+    static func roundTripIso8601Encoder(date: Date, encoder: Encoder) throws -> Void {
+        
+        var container = encoder.singleValueContainer()
+        
+        let data = roundTripIso8601.roundTripIso8601StringWithMicroseconds(from: date)
+        
+        try container.encode(data)
+    }
+    
+    
+    static func roundTripIso8601Decoder(decoder: Decoder) throws -> Date {
+        
+        let container = try decoder.singleValueContainer()
+        
+        let dateString = try container.decode(String.self)
+        
+        guard let microsecondDate = roundTripIso8601.roundTripIso8601DateWithMicroseconds(from: dateString) else {
+            throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "unable to parse string (\(dateString)) into date"))
+        }
+        
+        return microsecondDate
     }
 }
 
