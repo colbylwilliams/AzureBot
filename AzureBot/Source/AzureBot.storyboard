@@ -161,9 +161,9 @@
                         <constraint firstItem="pMa-Cg-kDR" firstAttribute="leading" secondItem="0xJ-eq-De7" secondAttribute="trailing" constant="16" id="cfd-Z8-udb"/>
                         <constraint firstItem="tnh-cF-1mF" firstAttribute="leading" secondItem="0xJ-eq-De7" secondAttribute="leading" id="cvO-Vm-4U0"/>
                         <constraint firstItem="qzQ-VD-Vnt" firstAttribute="bottom" secondItem="0xJ-eq-De7" secondAttribute="bottom" constant="3" id="fOg-ni-5cv"/>
-                        <constraint firstAttribute="trailing" secondItem="pMa-Cg-kDR" secondAttribute="trailing" constant="12" id="fui-rw-IK1"/>
+                        <constraint firstItem="qzQ-VD-Vnt" firstAttribute="trailing" secondItem="pMa-Cg-kDR" secondAttribute="trailing" constant="12" id="fui-rw-IK1"/>
                         <constraint firstItem="tnh-cF-1mF" firstAttribute="bottom" secondItem="0xJ-eq-De7" secondAttribute="bottom" id="j7Z-qw-feN"/>
-                        <constraint firstItem="0xJ-eq-De7" firstAttribute="leading" secondItem="zl7-nI-4jQ" secondAttribute="leading" constant="12" id="kYt-oV-FFm"/>
+                        <constraint firstItem="0xJ-eq-De7" firstAttribute="leading" secondItem="qzQ-VD-Vnt" secondAttribute="leading" constant="12" id="kYt-oV-FFm"/>
                         <constraint firstItem="qzQ-VD-Vnt" firstAttribute="bottom" secondItem="pMa-Cg-kDR" secondAttribute="bottom" constant="6" id="sIa-HL-hj3"/>
                         <constraint firstItem="0xJ-eq-De7" firstAttribute="top" secondItem="lNB-Tm-qGf" secondAttribute="top" constant="4" id="vvh-14-cPU"/>
                     </constraints>

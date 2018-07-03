@@ -19,31 +19,38 @@ public class BotClient: WebSocketDelegate {
     init() { }
     
     fileprivate static let _directLineSecretKey = "" // paste key here or pass in configure()
-    
     fileprivate var directLineSecretKey: String = _directLineSecretKey
 
     fileprivate var context: [Context] = []
     
-    
     fileprivate var socket: WebSocket!
     fileprivate let session: URLSession = URLSession(configuration: URLSessionConfiguration.default)
-    
-    var messages:SortedArray<Activity> = SortedArray(areInIncreasingOrder: > ) {
-        didSet {
-            print("didSet")
-            NotificationCenter.default.post(name: Notification.Name.BotClientDidAddMessageNotification, object: self, userInfo: nil)
-        }
-    }
     
     fileprivate var activities: [Activity] = []
     fileprivate var conversation: Conversation?
 
     
-    public func configure(secret: String? = nil, context: [Context] = []) {
-        self.context = context
-        if let secret = secret, !secret.isEmpty {
-            self.directLineSecretKey = secret
+    var currentUser = ChannelAccount(id: "default-user", name: "User")
+    
+    
+    var messages:SortedArray<Activity> = SortedArray(areInIncreasingOrder: > ) {
+        didSet {
+            //print("didSet: \(messages.count)")
+            if oldValue.count != messages.count {
+                NotificationCenter.default.post(name: Notification.Name.BotClientDidAddMessageNotification, object: self, userInfo: nil)
+            }
         }
+    }
+    
+    
+    public func configure(secret: String? = nil, user: ChannelAccount? = nil, context: [Context] = []) {
+        if !secret.isNilOrEmpty {
+            self.directLineSecretKey = secret!
+        }
+        if let user = user, !user.id.isNilOrEmpty, !user.name.isNilOrEmpty {
+            self.currentUser = user
+        }
+        self.context = context
     }
     
     
@@ -61,9 +68,6 @@ public class BotClient: WebSocketDelegate {
         }
     }
     
-    var currentUser = ChannelAccount(id: "default-user", name: "User")
-    
-    
     
     public func send(message: String, completion: @escaping (Response<ResourceResponse>) -> Void) {
         
@@ -80,8 +84,7 @@ public class BotClient: WebSocketDelegate {
             }
         }
         
-        print("insert")
-        messages.insert(activity)
+        print("insert: \(messages.insert(activity))")
         
         postActivity(activity, completion: completion)
     }
@@ -134,12 +137,6 @@ public class BotClient: WebSocketDelegate {
             case .message:
 
                 messages.insertOrReplace(element: activity)
-                
-//                if let i = messages.anyIndex(of: activity) {
-//                    messages.remove(at: i)
-//                }
-//
-//                messages.insert(activity)
                 
             case .contactRelationUpdate:
                 print("contactRelationUpdate")

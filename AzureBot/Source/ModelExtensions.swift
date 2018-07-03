@@ -14,6 +14,8 @@ extension Activity: Comparable {
     var hasId: Bool { return !id.isNilOrEmpty }
     var hasTimestamp: Bool { return timestamp != nil }
     var hasLocalTimestamp: Bool { return localTimestamp != nil }
+    var hasAnyTimestamp: Bool { return hasTimestamp || hasLocalTimestamp }
+    var anyTimestamp: Date? { return timestamp ?? localTimestamp }
     
     // backwards as the newest messages should be on top
     public static func < (lhs: Activity, rhs: Activity) -> Bool {
@@ -22,13 +24,17 @@ extension Activity: Comparable {
             return lhs.id! < rhs.id!
         }
         
-        if lhs.hasTimestamp, rhs.hasTimestamp {
-            return lhs.timestamp!.timeIntervalSince1970.rounded() < rhs.timestamp!.timeIntervalSince1970.rounded()
+        if lhs.hasAnyTimestamp, rhs.hasAnyTimestamp {
+            return lhs.anyTimestamp!.timeIntervalSince1970.rounded() < rhs.anyTimestamp!.timeIntervalSince1970.rounded()
         }
+        
+        // if lhs.hasTimestamp, rhs.hasTimestamp {
+            // return lhs.timestamp!.timeIntervalSince1970.rounded() < rhs.timestamp!.timeIntervalSince1970.rounded()
+        // }
 
-        if lhs.hasLocalTimestamp, rhs.hasLocalTimestamp {
-            return lhs.localTimestamp!.timeIntervalSince1970.rounded() < rhs.localTimestamp!.timeIntervalSince1970.rounded()
-        }
+        // if lhs.hasLocalTimestamp, rhs.hasLocalTimestamp {
+            // return lhs.localTimestamp!.timeIntervalSince1970.rounded() < rhs.localTimestamp!.timeIntervalSince1970.rounded()
+        // }
 
         return false
     }

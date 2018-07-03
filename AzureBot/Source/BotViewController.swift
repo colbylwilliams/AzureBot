@@ -18,95 +18,30 @@ public class BotViewController: UITableViewController {
     
     var messages: SortedArray<Activity> { return BotClient.shared.messages }
 
-    //@IBOutlet var messageToolbar: MessageToolbar!
-    //public override var inputAccessoryView: UIView? { return messageToolbar }
-    
     @IBOutlet var messageBar: MessageBar!
     public override var inputAccessoryView: UIView? { return messageBar }
     
-    
     public override var canBecomeFirstResponder: Bool { return true }
+    
+    
+    // MARK: - ViewController lifecycle
     
     public override func viewDidLoad() {
         super.viewDidLoad()
         
+        // flip the tableView upside down so cells are added to the 'bottom'
         tableView.transform = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: 0)
         
         setupObservers()
         
         BotClient.shared.start { r in
             if let conversation = r.resource {
-                print(conversation.conversationId ?? "")
-                print(conversation.streamUrl ?? "")
+                print("...conversationId: " + (conversation.conversationId ?? "") + "\n........streamUrl: " + (conversation.streamUrl ?? ""))
             } else if let error = r.error {
                 print("Error: " + error.localizedDescription)
             }
         }
     }
-    
-    
-    
-    fileprivate func setupObservers() {
-        
-        // Keyboard Notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification(notification:)), name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification(notification:)), name: .UIKeyboardDidShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification(notification:)), name: .UIKeyboardWillHide, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification(notification:)), name: .UIKeyboardDidHide, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification(notification:)), name: .UIKeyboardWillChangeFrame, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification(notification:)), name: .UIKeyboardDidChangeFrame, object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(handleMessageAdded(notification:)), name: .BotClientDidAddMessageNotification, object: BotClient.shared)
-    }
-    var shouldKeyboard: Bool = false
-    var didKeyboard: Bool = false
-    @objc
-    func handleKeyboardNotification(notification: Notification) {
-        switch notification.name {
-        case .UIKeyboardWillShow:
-            if false { }
-            // print("UIKeyboardWillShow")
-        case .UIKeyboardDidShow:
-            if false { }
-            // print("UIKeyboardDidShow")
-            // for m in messages { print("\(messages.anyIndex(of: m) ?? -1) \(m.localTimestamp?.timeIntervalSince1970 ?? 0)") }
-        case .UIKeyboardWillHide:
-            if false { }
-            // print("UIKeyboardWillHide")
-        case .UIKeyboardDidHide:
-            if false { }
-            // print("UIKeyboardDidHide")
-        case .UIKeyboardWillChangeFrame:
-            if false { }
-            //print("UIKeyboardWillChangeFrame")
-        case .UIKeyboardDidChangeFrame:
-            // print("UIKeyboardDidChangeFrame")
-            guard shouldKeyboard, !didKeyboard else { return }
-            if let rect = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect {
-                DispatchQueue.main.async {
-                    guard self.isVisible, self.messages.count > 0, rect.height > 100 else { return }
-                    self.didKeyboard = true
-                    print(rect)
-                    self.tableView.contentInset.top = (self.getContentInset().top + rect.height)
-                    self.tableView.scrollToRow(at: IndexPath.init(row: 0, section: 0), at: .top, animated: true)
-                }
-            }
-        default:
-            print("default")
-        }
-    }
-    
-    @objc
-    func handleMessageAdded(notification: Notification) {
-        DispatchQueue.main.async {
-            if self.isVisible {
-                self.tableView.reloadData()
-            } else {
-                self.needsUpdateViewOnAppearance = true
-            }
-        }
-    }
-    
     
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -121,49 +56,84 @@ public class BotViewController: UITableViewController {
         super.viewDidAppear(animated)
         
         becomeFirstResponder()
-        shouldKeyboard = true
-    }
-    
-    public override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-    }
-    
-    
-    func getContentInset() -> UIEdgeInsets {
-        return UIEdgeInsets(top: max(tableView.safeAreaInsets.top, messageBar.frame.height) - tableView.adjustedContentInset.top, left: 0, bottom: tableView.safeAreaInsets.bottom - tableView.adjustedContentInset.bottom, right: 0)
     }
     
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        // print(messageBar.frame)
-        
         if tableView.contentInset == UIEdgeInsets.zero {
-            tableView.contentInset = getContentInset()
+            updateContentInset(inset: getContentInset())
+        }
+    }
+
+    
+    fileprivate func setupObservers() {
+        // Keyboard Notifications
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification(notification:)), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification(notification:)), name: .UIKeyboardDidShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification(notification:)), name: .UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification(notification:)), name: .UIKeyboardDidHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification(notification:)), name: .UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification(notification:)), name: .UIKeyboardDidChangeFrame, object: nil)
+        // BotClient Notifications
+        NotificationCenter.default.addObserver(self, selector: #selector(handleMessageAdded(notification:)), name: .BotClientDidAddMessageNotification, object: BotClient.shared)
+    }
+    
+    
+    @objc
+    func handleKeyboardNotification(notification: Notification) {
+        switch notification.name {
+        // case .UIKeyboardWillShow: print("UIKeyboardWillShow")
+        // case .UIKeyboardDidShow: print("UIKeyboardDidShow")
+        // case .UIKeyboardWillHide: print("UIKeyboardWillHide")
+        // case .UIKeyboardDidHide: print("UIKeyboardDidHide")
+        // case .UIKeyboardWillChangeFrame: print("UIKeyboardWillChangeFrame")
+        case .UIKeyboardDidChangeFrame:
+            // print("UIKeyboardDidChangeFrame")
+            if let rect = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect {
+                DispatchQueue.main.async {
+                    //print("r \(rect) i \(self.tableView.safeAreaInsets)")
+                    print(self.tableView.contentInset)
+                    let inset = self.tableView.contentInset
+                    self.updateContentInset(inset: UIEdgeInsets(top: (rect.height + 10) - self.tableView.safeAreaInsets.top, left: inset.left, bottom: inset.bottom, right: inset.right))
+                }
+            }
+        default: return
         }
     }
     
-    var adjustedContentInsetCache: UIEdgeInsets!
-    
-    public override func scrollViewDidChangeAdjustedContentInset(_ scrollView: UIScrollView) {
-//        print("s \(tableView.safeAreaInsets)")
-//        print("s \(tableView.safeAreaLayoutGuide)")
+    func updateContentInset(inset: UIEdgeInsets) {
+        //guard self.isVisible else { return }
+        // print("update")
+        //print("s \(tableView.safeAreaInsets)")
+        //print("s \(tableView.safeAreaLayoutGuide.bottomAnchor)")
         
-//        if adjustedContentInsetCache == nil {
-//            adjustedContentInsetCache = scrollView.adjustedContentInset
-//        }
-//
-//        if adjustedContentInsetCache == scrollView.adjustedContentInset { return }
-//
-//        adjustedContentInsetCache = scrollView.adjustedContentInset
-//
-//        scrollView.contentInset = UIEdgeInsets(top: scrollView.safeAreaInsets.top - scrollView.adjustedContentInset.top, left: 0, bottom: scrollView.safeAreaInsets.bottom - scrollView.adjustedContentInset.bottom, right: 0)
-//
-//        print("scrollViewDidChangeAdjustedContentInset: \(scrollView.contentInset)")
-//        print("scrollViewDidChangeAdjustedContentInset: \(scrollView.adjustedContentInset)")
-        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.tableView.contentInset = inset
+        }, completion: { f in
+            if self.messages.count > 0 {
+                self.tableView.scrollToRow(at: IndexPath.init(row: 0, section: 0), at: .top, animated: true)
+            }
+        })
     }
     
+    
+    @objc
+    func handleMessageAdded(notification: Notification) {
+        DispatchQueue.main.async {
+            if self.isVisible {
+                self.tableView.reloadData()
+            } else {
+                self.needsUpdateViewOnAppearance = true
+            }
+        }
+    }
+    
+
+    func getContentInset() -> UIEdgeInsets {
+        return UIEdgeInsets(top: max(tableView.safeAreaInsets.top, messageBar.frame.height) - tableView.adjustedContentInset.top, left: 0, bottom: tableView.safeAreaInsets.bottom - tableView.adjustedContentInset.bottom, right: 0)
+    }
+
     
     // MARK: - UITableViewDataSource
     
@@ -176,7 +146,7 @@ public class BotViewController: UITableViewController {
         // print(tableView.contentOffset)
         
         let message = messages[indexPath.row]
-        let sending = message.from?.id != "homebotjs"
+        let sending = message.from?.id == BotClient.shared.currentUser.id
         let reuseId = sending ? SendMessageCell.reuseId : ReceiveMessageCell.reuseId
         
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseId, for: indexPath)
