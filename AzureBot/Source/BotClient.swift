@@ -15,6 +15,8 @@ extension Notification.Name {
 
 public class BotClient: WebSocketDelegate {
     
+    let demo = false
+    
     public static let shared: BotClient = BotClient()
     init() { }
     
@@ -26,12 +28,15 @@ public class BotClient: WebSocketDelegate {
     fileprivate var socket: WebSocket!
     fileprivate let session: URLSession = URLSession(configuration: URLSessionConfiguration.default)
     
-    fileprivate var activities: [Activity] = []
+    //fileprivate var activities: [Activity] = []
+    fileprivate var watermark: String?
     fileprivate var conversation: Conversation?
 
-    
+
     var currentUser = ChannelAccount(id: "default-user", name: "User")
     
+
+    // MARK: - Public API
     
     var messages:SortedArray<Activity> = SortedArray(areInIncreasingOrder: > ) {
         didSet {
@@ -55,21 +60,63 @@ public class BotClient: WebSocketDelegate {
     
     
     public func start(completion: @escaping (Response<Conversation>) -> Void) {
-        startConversation { r in
-            if let c = r.resource {
-                self.conversation = c
-                if let wws = c.streamUrl, let url = URL(string: wws) {
-                    self.startSocket(url)
+        
+        let starting = conversation == nil
+        
+        restoreConversation()
+        
+        if conversation == nil {
+            startConversation { r in
+                if let c = r.resource {
+                    self.conversation = c
+                    if let wws = c.streamUrl, let url = URL(string: wws) {
+                        self.cacheConversation()
+                        self.startSocket(url)
+                    }
+                } else if let e = r.error {
+                    print("[BotClient] Error: " + e.localizedDescription)
                 }
-            } else if let e = r.error {
-                print("[BotClient] Error: " + e.localizedDescription)
+                completion(r)
             }
-            completion(r)
+        } else {
+            
+            getActivities(fromWatermark: watermark) { ar in
+                
+                if let set = ar.resource {
+                    self.process(activitySet: set)
+                }
+                
+                self.reconnectToConversation(withWatermark: self.watermark) { r in
+                    if let c = r.resource {
+                        self.conversation = c
+                        if let wws = c.streamUrl, let url = URL(string: wws) {
+                            self.cacheConversation()
+                            self.startSocket(url)
+                            
+                            if starting {
+                                self.postActivity(Activity(type: .conversationUpdate, from: self.currentUser, in: c)) { _ in }
+                            }
+                        }
+                    } else if let e = r.error {
+                        print("[BotClient] Error: " + e.localizedDescription)
+                    }
+                    completion(r)
+                }
+            }
         }
     }
-    
+
     
     public func send(message: String, completion: @escaping (Response<ResourceResponse>) -> Void) {
+        
+        if demo, message.lowercased() == "reset" {
+            messages = SortedArray(areInIncreasingOrder: > )
+            watermark = "0"
+            conversation = nil
+            UserDefaults.standard.set(nil, forKey: "com.azure.bot.conversation.id")
+            start { _ in }
+            return
+        }
         
         var activity = Activity(message: message, from: currentUser, in: conversation)
         
@@ -84,50 +131,18 @@ public class BotClient: WebSocketDelegate {
             }
         }
         
-        print("insert: \(messages.insert(activity))")
-        
         postActivity(activity, completion: completion)
     }
     
-        
-    func startSocket(_ url: URL) {
-        print("[BotClient] starting socket...")
-        socket = WebSocket.init(url: url)
-        socket.delegate = self
-        socket.connect()
-    }
     
     
-    // MARK: - WebSocketDelegate
-    
-    public func websocketDidConnect(socket: WebSocketClient) {
-        print("[BotClient] websocketDidConnect")
-    }
-    
-    public func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
-        print("[BotClient] websocketDidDisconnect: \(error?.localizedDescription ?? "")")
-    }
-    
-    public func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
-        //print("[BotClient] websocketDidReceiveMessage: \(text)")
-        
-        // ignore empty messages
-        guard !text.isEmpty, let data = text.data(using: .utf8) else { return }
-        
-        do {
-            let activitySet = try decoder.decode(ActivitySet.self, from: data)
-            process(activitySet: activitySet)
-        } catch {
-            print("[BotClient] Error: " + error.localizedDescription)
-        }
-    }
-    
-    public func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
-        print("[BotClient] websocketDidReceiveData: \(data)")
-    }
-
+    // MARK: - Process Activities
     
     func process(activitySet: ActivitySet) {
+        
+        if let wm = activitySet.watermark, !wm.isEmpty, (watermark.isNilOrEmpty || wm > watermark!) {
+            watermark = wm
+        }
         
         for activity in activitySet.activities {
             
@@ -135,7 +150,7 @@ public class BotClient: WebSocketDelegate {
             // https://docs.microsoft.com/en-us/azure/bot-service/rest-api/bot-framework-rest-direct-line-3-0-receive-activities?view=azure-bot-service-4.0#websocket-vs-http-get
             switch type {
             case .message:
-
+                
                 messages.insertOrReplace(element: activity)
                 
             case .contactRelationUpdate:
@@ -153,7 +168,50 @@ public class BotClient: WebSocketDelegate {
             }
         }
     }
+
     
+    
+    // MARK: - WebSocketDelegate
+    
+    func startSocket(_ url: URL) {
+        print("[BotClient] starting socket...")
+        socket = WebSocket.init(url: url)
+        socket.delegate = self
+        socket.connect()
+    }
+    
+    // MARK: WebSocketDelegate
+    
+    public func websocketDidConnect(socket: WebSocketClient) {
+        print("[BotClient] websocketDidConnect")
+    }
+    
+    public func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
+        print("[BotClient] websocketDidDisconnect: \(error?.localizedDescription ?? "")")
+    }
+    
+    public func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
+        
+        // ignore empty messages
+        guard !text.isEmpty, let data = text.data(using: .utf8) else { return }
+        
+        print("[BotClient] websocketDidReceiveMessage:\n\(text)")
+        
+        do {
+            let activitySet = try decoder.decode(ActivitySet.self, from: data)
+            process(activitySet: activitySet)
+        } catch {
+            print("[BotClient] Error: " + error.localizedDescription)
+        }
+    }
+    
+    public func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
+        print("[BotClient] websocketDidReceiveData: \(data)")
+    }
+    
+    
+    
+    // MARK: - Direct Line API
     
     public func startConversation(completion: @escaping (Response<Conversation>) -> Void) {
         do {
@@ -216,7 +274,6 @@ public class BotClient: WebSocketDelegate {
         } catch {
             completion(Response(error))
         }
-
     }
 
     public func refreshToken(completion: @escaping (Response<Conversation>) -> Void) {
@@ -241,6 +298,10 @@ public class BotClient: WebSocketDelegate {
         }
     }
 
+    
+    
+    // MARK: - Create & Send Request
+    
     fileprivate func sendRequest<T:Codable> (_ request: URLRequest, completion: @escaping (Response<T>) -> ()) {
         
         session.dataTask(with: request) { (data, response, error) in
@@ -367,6 +428,27 @@ public class BotClient: WebSocketDelegate {
     }()
 }
 
+// MARK: - Conversation Cache
+
+extension BotClient {
+    
+    fileprivate func restoreConversation() {
+        if conversation == nil,
+            let data = UserDefaults.standard.data(forKey: "com.azure.bot.conversation.id"),
+            let conversation = try? decoder.decode(Conversation.self, from: data) {
+            self.conversation = conversation
+        }
+    }
+    
+    fileprivate func cacheConversation() {
+        if let c = conversation, !c.conversationId.isNilOrEmpty, let data = try? self.encoder.encode(c) {
+            UserDefaults.standard.set(data, forKey: "com.azure.bot.conversation.id")
+        }
+    }
+}
+
+
+
 // MARK: - Date Encoder & Decoder
 
 extension BotClient {
@@ -476,5 +558,4 @@ fileprivate extension String {
         }
     }
 }
-
 

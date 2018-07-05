@@ -27,14 +27,6 @@ extension Activity: Comparable {
         if lhs.hasAnyTimestamp, rhs.hasAnyTimestamp {
             return lhs.anyTimestamp!.timeIntervalSince1970.rounded() < rhs.anyTimestamp!.timeIntervalSince1970.rounded()
         }
-        
-        // if lhs.hasTimestamp, rhs.hasTimestamp {
-            // return lhs.timestamp!.timeIntervalSince1970.rounded() < rhs.timestamp!.timeIntervalSince1970.rounded()
-        // }
-
-        // if lhs.hasLocalTimestamp, rhs.hasLocalTimestamp {
-            // return lhs.localTimestamp!.timeIntervalSince1970.rounded() < rhs.localTimestamp!.timeIntervalSince1970.rounded()
-        // }
 
         return false
     }
@@ -57,7 +49,6 @@ extension Activity: Comparable {
         return false
     }
 }
-
 
 extension GeoCoordinates {
     static func from(location: CLLocation) -> GeoCoordinates {

@@ -8,6 +8,10 @@
 
 import Foundation
 
+public enum EntityType: String, Codable {
+    case geoCoordinates = "GeoCoordinates"
+    case clientCapabilities = "ClientCapabilities"
+}
 
 public protocol Entity: Codable {
     var type: String? { get set }
@@ -51,7 +55,7 @@ public struct Activity: Codable {
     public var locale: String?
     public var text: String?
     public var speak: String?
-    public var inputHint: String?
+    public var inputHint: InputHint?
     public var summary: String?
     public var suggestedActions: SuggestedActions?
     public var attachments: [Attachment]?
@@ -83,12 +87,38 @@ public struct Activity: Codable {
         case carousel = "carousel"
     }
     
+    public enum InputHint: String, Codable {
+        case acceptingInput = "acceptingInput"
+        case expectingInput = "expectingInput"
+        case ignoringInput  = "ignoringInput"
+    }
+    
     public init(message: String, from: ChannelAccount, `in` conv: Conversation?) {
         self.type = .message
-        // self.timestamp = Date()
         self.localTimestamp = Date()
         self.text = message
         self.from = from
+        self.locale = Locale.autoupdatingCurrent.identifier
+        
+        if let c = conv {
+            self.conversation = ConversationAccount(withId: c.conversationId)
+        }
+    }
+    
+    public init(type: ActivityType, from: ChannelAccount, `in` conv: Conversation?, remove: Bool? = false) {
+        self.type = type
+        self.localTimestamp = Date()
+        
+        if type == .conversationUpdate {
+            if remove ?? false {
+                self.membersRemoved = [from]
+            } else {
+                self.membersAdded = [from]
+            }
+        }
+        
+        self.from = from
+        self.locale = Locale.autoupdatingCurrent.identifier
         
         if let c = conv {
             self.conversation = ConversationAccount(withId: c.conversationId)
@@ -287,7 +317,7 @@ public struct MediaUrl: Codable {
 
 // [WGS 84](https://en.wikipedia.org/wiki/World_Geodetic_System)
 public struct GeoCoordinates: Thing {
-    public var type: String?
+    public var type: String? = "GeoCoordinates"
     public var name: String?
     public var elevation: Double?
     public var latitude: Double?
@@ -295,7 +325,7 @@ public struct GeoCoordinates: Thing {
 }
 
 public struct Mention: Entity {
-    public var type: String?
+    public var type: String? = "Mention"
     public var mentioned: ChannelAccount?
     public var text: String?
 }

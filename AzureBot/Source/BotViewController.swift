@@ -35,8 +35,8 @@ public class BotViewController: UITableViewController {
         setupObservers()
         
         BotClient.shared.start { r in
-            if let conversation = r.resource {
-                print("...conversationId: " + (conversation.conversationId ?? "") + "\n........streamUrl: " + (conversation.streamUrl ?? ""))
+            if let _ = r.resource {
+                
             } else if let error = r.error {
                 print("Error: " + error.localizedDescription)
             }
@@ -93,7 +93,7 @@ public class BotViewController: UITableViewController {
             if let rect = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect {
                 DispatchQueue.main.async {
                     //print("r \(rect) i \(self.tableView.safeAreaInsets)")
-                    print(self.tableView.contentInset)
+                    // print(self.tableView.contentInset)
                     let inset = self.tableView.contentInset
                     self.updateContentInset(inset: UIEdgeInsets(top: (rect.height + 10) - self.tableView.safeAreaInsets.top, left: inset.left, bottom: inset.bottom, right: inset.right))
                 }
