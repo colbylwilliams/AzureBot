@@ -14,6 +14,7 @@
 		9399EADB20D990E3000E24B4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9399EAD920D990E3000E24B4 /* LaunchScreen.storyboard */; };
 		9399EAE620D990E4000E24B4 /* AzureBot_ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9399EAE520D990E4000E24B4 /* AzureBot_ExampleTests.swift */; };
 		9399EAF220D99115000E24B4 /* AzureBot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9399EAF120D99115000E24B4 /* AzureBot.framework */; };
+		93B6758320FA4DF30086BA6A /* AzureBot.plist in Resources */ = {isa = PBXBuildFile; fileRef = 93B6758220FA4DF30086BA6A /* AzureBot.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		9399EAE520D990E4000E24B4 /* AzureBot_ExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureBot_ExampleTests.swift; sourceTree = "<group>"; };
 		9399EAE720D990E4000E24B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9399EAF120D99115000E24B4 /* AzureBot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AzureBot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		93B6758220FA4DF30086BA6A /* AzureBot.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = AzureBot.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 				9399EAD720D990E3000E24B4 /* Assets.xcassets */,
 				9399EAD920D990E3000E24B4 /* LaunchScreen.storyboard */,
 				9399EADC20D990E3000E24B4 /* Info.plist */,
+				93B6758220FA4DF30086BA6A /* AzureBot.plist */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -189,6 +192,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93B6758320FA4DF30086BA6A /* AzureBot.plist in Resources */,
 				9399EADB20D990E3000E24B4 /* LaunchScreen.storyboard in Resources */,
 				9399EAD820D990E3000E24B4 /* Assets.xcassets in Resources */,
 				9399EAD620D990E1000E24B4 /* Main.storyboard in Resources */,

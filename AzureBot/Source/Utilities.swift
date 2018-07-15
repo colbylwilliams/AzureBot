@@ -142,3 +142,8 @@ extension DateFormatter {
         return preliminaryDate
     }
 }
+
+
+extension HTTPURLResponse {
+    
+}

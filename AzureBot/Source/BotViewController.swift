@@ -36,7 +36,7 @@ public class BotViewController: UITableViewController {
         
         BotClient.shared.start { r in
             if let _ = r.resource {
-                
+                print(r.printResponseData())
             } else if let error = r.error {
                 print("Error: " + error.localizedDescription)
             }

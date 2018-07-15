@@ -98,7 +98,6 @@ public struct Activity: Codable {
         self.localTimestamp = Date()
         self.text = message
         self.from = from
-        self.locale = Locale.autoupdatingCurrent.identifier
         
         if let c = conv {
             self.conversation = ConversationAccount(withId: c.conversationId)
@@ -118,7 +117,6 @@ public struct Activity: Codable {
         }
         
         self.from = from
-        self.locale = Locale.autoupdatingCurrent.identifier
         
         if let c = conv {
             self.conversation = ConversationAccount(withId: c.conversationId)

@@ -26,6 +26,7 @@
 		9399EB0120D9F363000E24B4 /* ReceiveMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9399EB0020D9F363000E24B4 /* ReceiveMessageCell.swift */; };
 		9399EB0720D9F6E7000E24B4 /* AzureBot.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9399EB0620D9F6E7000E24B4 /* AzureBot.storyboard */; };
 		93A6D57520EBC95500892561 /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A6D57420EBC95500892561 /* Context.swift */; };
+		93B6757F20FA45520086BA6A /* BotKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B6757E20FA45520086BA6A /* BotKeys.swift */; };
 		93D61E0320DC880B00E8F627 /* ModelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D61E0220DC880B00E8F627 /* ModelExtensions.swift */; };
 		93D61E0520DC89C700E8F627 /* SortedArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D61E0420DC89C700E8F627 /* SortedArray.swift */; };
 /* End PBXBuildFile section */
@@ -63,6 +64,7 @@
 		9399EB0020D9F363000E24B4 /* ReceiveMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiveMessageCell.swift; sourceTree = "<group>"; };
 		9399EB0620D9F6E7000E24B4 /* AzureBot.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AzureBot.storyboard; sourceTree = "<group>"; };
 		93A6D57420EBC95500892561 /* Context.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Context.swift; sourceTree = "<group>"; };
+		93B6757E20FA45520086BA6A /* BotKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BotKeys.swift; sourceTree = "<group>"; };
 		93D61E0220DC880B00E8F627 /* ModelExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelExtensions.swift; sourceTree = "<group>"; };
 		93D61E0420DC89C700E8F627 /* SortedArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortedArray.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -112,6 +114,7 @@
 				9399EB0620D9F6E7000E24B4 /* AzureBot.storyboard */,
 				9399EAC120D98B29000E24B4 /* Api.swift */,
 				9399EAB620D970E9000E24B4 /* BotClient.swift */,
+				93B6757E20FA45520086BA6A /* BotKeys.swift */,
 				9399EAB220D962B2000E24B4 /* Http.swift */,
 				93381B6B20DD680700883D31 /* LocationManager.swift */,
 				93A6D57420EBC95500892561 /* Context.swift */,
@@ -312,6 +315,7 @@
 				9399EAFF20D9F35C000E24B4 /* SendMessageCell.swift in Sources */,
 				9399EB0120D9F363000E24B4 /* ReceiveMessageCell.swift in Sources */,
 				9399EAB720D970E9000E24B4 /* BotClient.swift in Sources */,
+				93B6757F20FA45520086BA6A /* BotKeys.swift in Sources */,
 				93D61E0520DC89C700E8F627 /* SortedArray.swift in Sources */,
 				9399EAC020D98108000E24B4 /* Utilities.swift in Sources */,
 				93381B6C20DD680700883D31 /* LocationManager.swift in Sources */,

@@ -20,8 +20,7 @@ public class BotClient: WebSocketDelegate {
     public static let shared: BotClient = BotClient()
     init() { }
     
-    fileprivate static let _directLineSecretKey = "" // paste key here or pass in configure()
-    fileprivate var directLineSecretKey: String = _directLineSecretKey
+    fileprivate var directLineSecretKey: String = ""
 
     fileprivate var context: [Context] = []
     
@@ -59,7 +58,34 @@ public class BotClient: WebSocketDelegate {
     }
     
     
+    public func configure(withPlistNamed customPlistName: String? = nil, user: ChannelAccount? = nil, context: [Context] = []) {
+        
+        if let keys = BotKeys.tryCreateFromPlists(custom: customPlistName) {
+            
+            if keys.hasValidDirectLineSecret {
+                self.directLineSecretKey = keys.directLineSecret!
+            }
+        }
+        
+        if let user = user, !user.id.isNilOrEmpty, !user.name.isNilOrEmpty {
+            self.currentUser = user
+        }
+        self.context = context
+    }
+
+    
+    
     public func start(completion: @escaping (Response<Conversation>) -> Void) {
+        
+        if (conversation?.token ?? directLineSecretKey).isEmpty, let keys = BotKeys.tryCreateFromPlists(), keys.hasValidDirectLineSecret {
+            self.directLineSecretKey = keys.directLineSecret!
+        }
+        
+        guard !(conversation?.token ?? directLineSecretKey).isEmpty else {
+            print("[BotClient] Error: Can not start client without a conversation token or Direct Line Secret")
+            completion(Response(BotClientError.invalidIds))
+            return
+        }
         
         let starting = conversation == nil
         
@@ -298,8 +324,6 @@ public class BotClient: WebSocketDelegate {
         }
     }
 
-    
-    
     // MARK: - Create & Send Request
     
     fileprivate func sendRequest<T:Codable> (_ request: URLRequest, completion: @escaping (Response<T>) -> ()) {
@@ -314,6 +338,28 @@ public class BotClient: WebSocketDelegate {
                 
             } else if let data = data {
                 
+                if let statusCode = httpResponse?.statusCode, statusCode >= 400 {
+                    
+                    if statusCode == HttpStatusCode.forbidden.rawValue, !self.directLineSecretKey.isEmpty, request.url != Api.refreshToken.url() {
+
+                        print("repeatRequest")
+                        
+                        self.conversation?.token = nil
+                        
+                        var repeatRequest = request
+                        
+                        repeatRequest.setValue("Bearer \(self.conversation?.token ?? self.directLineSecretKey)", forHTTPHeaderField: "Authorization")
+
+                        self.sendRequest(repeatRequest, completion: completion)
+                        
+                    } else {
+                        completion(Response(request: request, data: data, response: httpResponse, result: .failure(BotClientError.apiError(try? self.decoder.decode(ApiError.self, from: data)))))
+                    }
+                    
+                    return
+                }
+                
+                
                 do {
                     
                     let resource = try self.decoder.decode(T.self, from: data)
@@ -327,7 +373,7 @@ public class BotClient: WebSocketDelegate {
             } else {
                 completion(Response(request: request, data: data, response: httpResponse, result: .failure(BotClientError.unknown)))
             }
-            }.resume()
+        }.resume()
     }
     
     fileprivate func dataRequest(for api: Api, withQuery query: String? = nil, andHeaders headers: [String:String]? = nil) throws -> URLRequest {
@@ -508,8 +554,18 @@ public enum BotClientError : Error {
     case urlError(String)
     case decodeError(DecodingError)
     case encodingError(EncodingError)
+    case apiError(ApiError?)
 }
 
+public struct ApiError: Decodable {
+
+    public let error: ApiErrorDetails
+
+    public struct ApiErrorDetails: Decodable {
+        public let code: String
+        public let message: String
+    }
+}
 
 fileprivate extension Optional where Wrapped == String {
     mutating func add (_ queryKey: String, _ queryValue: Any?) {
