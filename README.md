@@ -68,9 +68,7 @@ _Coming soon_
 
 # Keys
 
-To get started using AzureBot, you need to provide the SDK with your [Direct Line Secret](https://docs.microsoft.com/en-us/azure/bot-service/rest-api/bot-framework-rest-direct-line-3-0-concepts?view=azure-bot-service-4.0#authentication).
-
-There are two ways to provide the Direct Line Secret; programmatically, or by adding it to a plist file:
+To get started using AzureBot, you need to provide the SDK with your [Direct Line Secret](https://docs.microsoft.com/en-us/azure/bot-service/rest-api/bot-framework-rest-direct-line-3-0-concepts?view=azure-bot-service-4.0#authentication). There are two ways to provide the Direct Line Secret; programmatically, or by adding it to a plist file:
 
 ### Programmatically
 
@@ -83,9 +81,7 @@ BotClient.shared.configure(withSecret: "BOT_FRAMEWORK_DIRECT_LINE_SECRET")
 
 ### Plist File
 
-Alternatively, you can provide these values in your project's `info.plist`, a separate [`AzureBot.plist`](https://github.com/colbylwilliams/AzureBot/blob/master/AzureBot/AzureBot.plist), or provide the name of your own plist file to use.
-
-Simply add the `BotFrameworkDirectLineSecret` key and provide your Direct Line Secret.
+Alternatively, you can provide these values in your project's `info.plist`, a separate [`AzureBot.plist`](https://github.com/colbylwilliams/AzureBot/blob/master/AzureBot/AzureBot.plist), or provide the name of your own plist file to use.  Simply add the `BotFrameworkDirectLineSecret` key and provide your Direct Line Secret.
 
 **_Note: This method is provided for convenience when quickly developing samples and is not recommended to ship this secret in a plist in production apps._**
 
