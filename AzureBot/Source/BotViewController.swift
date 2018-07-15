@@ -161,3 +161,15 @@ public class BotViewController: UITableViewController {
     // MARK: - UITableViewDelegate
     
 }
+
+extension BotViewController {
+    
+    public static func create() -> BotViewController {
+        
+        let storyboard = UIStoryboard(name: "AzureBot", bundle: Bundle(for: BotViewController.self))
+        
+        let botController = storyboard.instantiateViewController(withIdentifier: "BotViewController")
+
+        return botController as! BotViewController
+    }
+}

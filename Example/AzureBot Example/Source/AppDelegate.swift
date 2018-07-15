@@ -29,12 +29,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         window = window ?? UIWindow(frame: UIScreen.main.bounds)
 
-        let storyboard = UIStoryboard(name: "AzureBot", bundle: Bundle.init(for: BotViewController.self))
-
-        let rootController = storyboard.instantiateViewController(withIdentifier: "BotViewController")
+        let botController = BotViewController.create()
 
         if let window = window {
-            window.rootViewController = rootController
+            window.rootViewController = botController
             window.makeKeyAndVisible()
         }
     }

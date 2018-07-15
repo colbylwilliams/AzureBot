@@ -6,8 +6,19 @@ AzureBot is an iOS SDK for embedding a bot created using Microsoft Bot Framework
 ### Features
 - [x] [Direct Line API](https://docs.microsoft.com/en-us/azure/bot-service/rest-api/bot-framework-rest-direct-line-3-0-api-reference?view=azure-bot-service-4.0)
 - [x] [Uses websockets](https://docs.microsoft.com/en-us/azure/bot-service/rest-api/bot-framework-rest-direct-line-3-0-concepts?view=azure-bot-service-4.0#receiving-messages) _(instead of polling GET requests)_
-- [x] Native Chat UI
 - [x] Sample App
+- [x] Native Chat UI
+- [ ] [Rich Card](https://docs.microsoft.com/en-us/azure/bot-service/bot-service-design-user-experience?view=azure-bot-service-4.0#cards) Support
+    - [ ] AdaptiveCard
+    - [ ] AnimationCard
+    - [ ] AudioCard
+    - [ ] HeroCard
+    - [ ] ThumbnailCard
+    - [ ] ReceiptCard
+    - [ ] SignInCard
+    - [ ] SuggestedAction
+    - [ ] VideoCard
+    - [ ] CardCarousel
 
 ### Requirements
 - iOS 11.0+
@@ -17,12 +28,12 @@ AzureBot is an iOS SDK for embedding a bot created using Microsoft Bot Framework
 
 
 
-# Usage
+# Try Me
 
 Want to check out the SDK first?  Check out the example app.  Just clone this repo, add your Direct Line Secret to the [Example App's `AzureData.plist`](https://github.com/colbylwilliams/AzureBot/blob/master/Example/AzureBot%20Example/Source/AzureBot.plist) file and run.
 
 
-## Installation
+# Installation
 
 Follow one of these three options to add the framework to your own project.
 
@@ -55,7 +66,7 @@ _Coming soon_
 
 
 
-## Setup
+# Keys
 
 To get started using AzureBot, you need to provide the SDK with your [Direct Line Secret](https://docs.microsoft.com/en-us/azure/bot-service/rest-api/bot-framework-rest-direct-line-3-0-concepts?view=azure-bot-service-4.0#authentication).
 
@@ -114,7 +125,30 @@ BotClient.shared.configure(withPlistNamed: "SuperDuperDope")
 ```
 
 
+# BotViewController
 
+`BotViewController` is a UIViewController that renders the conversational interface for your bot.
+
+![BotViewController-0](/images/azurebot_0.png?raw=true "BotViewController") | ![BotViewController-1](/images/azurebot_1.png?raw=true "BotViewController") | ![BotViewController-2](/images/azurebot_2.png?raw=true "BotViewController")
+:-------------------------:|:-------------------------:|:-------------------------:
+
+You can add a `BotViewController` to your application programmatically or in your Storyboard file:
+
+### Programmatically
+
+```swift
+let botController = BotViewController.create()
+
+present(botController, animated: true, completion: nil)
+```
+
+
+### Storyboard
+
+![Storyboard](/images/storyboard.png?raw=true "Storyboard")
+
+
+# About
 
 
 ## Third-party Code ❤️
