@@ -547,16 +547,6 @@ extension BotClient {
     }
 }
 
-public enum BotClientError : Error {
-    case unknown
-    case invalidIds
-    case noConversation
-    case urlError(String)
-    case decodeError(DecodingError)
-    case encodingError(EncodingError)
-    case apiError(ApiError?)
-}
-
 public struct ApiError: Decodable {
 
     public let error: ApiErrorDetails

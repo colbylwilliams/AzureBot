@@ -166,7 +166,7 @@ public struct CardAction: Codable {
     public var type: String?
     public var title: String?
     public var image: String?
-    public var value: Data?
+    public var value: String?
 }
 
 public struct ResourceResponse: Codable {

@@ -10,6 +10,7 @@
 		932FE64320DA8A4D0056CE77 /* AzureBot.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 932FE64220DA8A4D0056CE77 /* AzureBot.xcassets */; };
 		932FE64520DAA3BA0056CE77 /* MessageBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932FE64420DAA3BA0056CE77 /* MessageBar.swift */; };
 		93381B6C20DD680700883D31 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93381B6B20DD680700883D31 /* LocationManager.swift */; };
+		935EBD89212B049300A389A6 /* BotClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935EBD88212B049300A389A6 /* BotClientError.swift */; };
 		9399EAA220D96063000E24B4 /* AzureBot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9399EA9820D96063000E24B4 /* AzureBot.framework */; };
 		9399EAA720D96063000E24B4 /* AzureBotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9399EAA620D96063000E24B4 /* AzureBotTests.swift */; };
 		9399EAA920D96063000E24B4 /* AzureBot.h in Headers */ = {isa = PBXBuildFile; fileRef = 9399EA9B20D96063000E24B4 /* AzureBot.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -45,6 +46,7 @@
 		932FE64220DA8A4D0056CE77 /* AzureBot.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AzureBot.xcassets; sourceTree = "<group>"; };
 		932FE64420DAA3BA0056CE77 /* MessageBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBar.swift; sourceTree = "<group>"; };
 		93381B6B20DD680700883D31 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		935EBD88212B049300A389A6 /* BotClientError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BotClientError.swift; sourceTree = "<group>"; };
 		9399EA9820D96063000E24B4 /* AzureBot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AzureBot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9399EA9B20D96063000E24B4 /* AzureBot.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AzureBot.h; sourceTree = "<group>"; };
 		9399EA9C20D96063000E24B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				9399EB0620D9F6E7000E24B4 /* AzureBot.storyboard */,
 				9399EAC120D98B29000E24B4 /* Api.swift */,
 				9399EAB620D970E9000E24B4 /* BotClient.swift */,
+				935EBD88212B049300A389A6 /* BotClientError.swift */,
 				93B6757E20FA45520086BA6A /* BotKeys.swift */,
 				9399EAB220D962B2000E24B4 /* Http.swift */,
 				93381B6B20DD680700883D31 /* LocationManager.swift */,
@@ -312,6 +315,7 @@
 				93A6D57520EBC95500892561 /* Context.swift in Sources */,
 				9399EABE20D97F89000E24B4 /* Response.swift in Sources */,
 				9399EAB320D962B2000E24B4 /* Http.swift in Sources */,
+				935EBD89212B049300A389A6 /* BotClientError.swift in Sources */,
 				9399EAFF20D9F35C000E24B4 /* SendMessageCell.swift in Sources */,
 				9399EB0120D9F363000E24B4 /* ReceiveMessageCell.swift in Sources */,
 				9399EAB720D970E9000E24B4 /* BotClient.swift in Sources */,
