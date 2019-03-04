@@ -57,8 +57,21 @@ github "colbylwilliams/AzureBot"
 Run `carthage update` to build the framework and drag the built `AzureBot.framework` into your Xcode project.
 
 ### CocoaPods
+[CocoaPods](https://cocoapods.org/) manages library dependencies for your Xcode projects.
 
-_Coming soon_
+The dependencies for your projects are specified in a single text file called a Podfile. CocoaPods will resolve dependencies between libraries, fetch the resulting source code, then link it together in an Xcode workspace to build your project.
+
+You can install CocoaPods with the following command:
+
+```bash
+$ sudo gem install cocoapods
+```
+
+To integrate AzureBot into your Xcode project using CocoaPods, specify it in your [Podfile](https://guides.cocoapods.org/using/the-podfile.html)
+```
+pod 'AzureBot', :git => 'https://github.com/baillyjamy/AzureBot.git'
+```
+Run `pod install` to create your workspace. For more information, see the [documentation](https://guides.cocoapods.org/)
 
 ### Swift Package Manager
 

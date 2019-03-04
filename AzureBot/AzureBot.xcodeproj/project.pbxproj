@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7793D516222D5BED00EF3C6F /* AzureBot.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 7793D515222D5BED00EF3C6F /* AzureBot.podspec */; };
 		932FE64320DA8A4D0056CE77 /* AzureBot.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 932FE64220DA8A4D0056CE77 /* AzureBot.xcassets */; };
 		932FE64520DAA3BA0056CE77 /* MessageBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932FE64420DAA3BA0056CE77 /* MessageBar.swift */; };
 		93381B6C20DD680700883D31 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93381B6B20DD680700883D31 /* LocationManager.swift */; };
@@ -43,6 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7793D515222D5BED00EF3C6F /* AzureBot.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = AzureBot.podspec; path = ../AzureBot.podspec; sourceTree = "<group>"; };
 		932FE64220DA8A4D0056CE77 /* AzureBot.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AzureBot.xcassets; sourceTree = "<group>"; };
 		932FE64420DAA3BA0056CE77 /* MessageBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBar.swift; sourceTree = "<group>"; };
 		93381B6B20DD680700883D31 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 		9399EA8E20D96063000E24B4 = {
 			isa = PBXGroup;
 			children = (
+				7793D515222D5BED00EF3C6F /* AzureBot.podspec */,
 				9399EA9A20D96063000E24B4 /* Source */,
 				9399EAA520D96063000E24B4 /* Tests */,
 				9399EA9920D96063000E24B4 /* Products */,
@@ -259,6 +262,7 @@
 			files = (
 				9399EB0720D9F6E7000E24B4 /* AzureBot.storyboard in Resources */,
 				932FE64320DA8A4D0056CE77 /* AzureBot.xcassets in Resources */,
+				7793D516222D5BED00EF3C6F /* AzureBot.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
